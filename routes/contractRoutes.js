@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const { getContracts, getContract, createContract, updateContract, terminateContract, renewContract } = require('../controllers/contractController');
+const { protect, authorize } = require('../middleware/auth');
+router.use(protect);
+router.get('/', getContracts);
+router.get('/:id', getContract);
+router.post('/', authorize('admin','employee'), createContract);
+router.put('/:id', authorize('admin','employee'), updateContract);
+router.post('/:id/terminate', authorize('admin','employee'), terminateContract);
+router.post('/:id/renew', authorize('admin','employee'), renewContract);
+module.exports = router;

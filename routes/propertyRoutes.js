@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const { getProperties, getProperty, createProperty, updateProperty, deleteProperty } = require('../controllers/propertyController');
+const { protect, authorize } = require('../middleware/auth');
+router.use(protect);
+router.get('/', getProperties);
+router.get('/:id', getProperty);
+router.post('/', authorize('admin','employee'), createProperty);
+router.put('/:id', authorize('admin','employee'), updateProperty);
+router.delete('/:id', authorize('admin'), deleteProperty);
+module.exports = router;
